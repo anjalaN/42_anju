@@ -299,3 +299,209 @@ Perform the same checks as above, in the following cases:
 ◦ The initial state of the puzzle is an already solved puzzle. In this case, no moves should be needed.
 ◦ The initial state is an unsolvable puzzle.
 ◦ Try a random initial state of your choice.
+
+
+@@@@@@@@@@@@@@@@@@@@exoo@@@@@@@@@
+   import random
+
+def generate_random_state():
+  """Generates a random initial state for the 8-Puzzle."""
+  numbers = list(range(1, 9)) + [0]  # 0 represents the empty space
+  random.shuffle(numbers)
+  state = [numbers[0:3], numbers[3:6], numbers[6:]]
+  return state
+
+def is_solvable(state):
+  """Checks if the given puzzle state is solvable."""
+  flattened_state = [num for row in state for num in row if num != 0]
+  inversions = 0
+
+  for i in range(len(flattened_state)):
+    for j in range(i + 1, len(flattened_state)):
+      if flattened_state[i] > flattened_state[j]:
+        inversions += 1
+
+  blank_row = 0
+  for i, row in enumerate(state):
+    if 0 in row:
+      blank_row = i
+      break
+
+  if (inversions % 2 == 0 and blank_row % 2 == 0) or (inversions % 2 == 1 and blank_row % 2 == 1):
+    return True
+  else:
+    return False
+
+def generate_moves(state):
+  """Generates all possible moves from the given state."""
+  moves = []
+  empty_row, empty_col = find_empty_space(state)
+
+  if empty_row > 0:  # Move empty space up
+    moves.append(("up", move_empty_space(state, empty_row, empty_col, empty_row - 1)))
+
+  if empty_row < 2:  # Move empty space down
+    moves.append(("down", move_empty_space(state, empty_row, empty_col, empty_row + 1)))
+
+  if empty_col > 0:  # Move empty space left
+    moves.append(("left", move_empty_space(state, empty_row, empty_col, empty_col - 1)))
+
+  if empty_col < 2:  # Move empty space right
+    moves.append(("right", move_empty_space(state, empty_row, empty_col, empty_col + 1)))
+
+  return moves
+
+def move_empty_space(state, empty_row, empty_col, new_row, new_col):
+  """Moves the empty space in the given direction."""
+  new_state = [row[:] for row in state]  # Create a copy of the state
+  new_state[empty_row][empty_col], new_state[new_row][new_col] = new_state[new_row][new_col], new_state[empty_row][empty_col]
+  return new_state
+
+def find_empty_space(state):
+  """Finds the row and column of the empty space (0)."""
+  for row in range(3):
+    for col in range(3):
+      if state[row][col] == 0:
+        return row, col
+
+def dfs(state, goal_state, moves):
+  """Performs Depth-First Search to find a solution."""
+  if state == goal_state:
+    return moves
+  
+  for next_state, move in generate_moves(state):
+    path = dfs(next_state, goal_state, moves + [move])
+    if path:
+      return path
+  return None
+
+def solve_puzzle(initial_state):
+  """Solves the 8-Puzzle."""
+  if not is_solvable(initial_state):
+    return "Unsolvable Puzzle"
+
+  goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]  # 0 represents the empty space
+  solution = dfs(initial_state, goal_state, [])
+  if solution:
+    print("Solution:")
+    for move in solution:
+      print(move)
+  else:
+    return "No solution found"
+
+# Generate random initial state
+initial_state = generate_random_state()
+
+# Print initial state
+print("Initial State:")
+for row in initial_state:
+  print(row)
+
+# Solve the puzzle and print the solution
+solution = solve_puzzle(initial_state)
+print(solution)
+
+
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@ex2@@@@@@@@@@@@@@@@@
+import random
+from collections import deque
+import sys
+
+# Goal state for the 3x3 puzzle
+goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+
+# Directions for moving the empty space: up, down, left, right
+directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (row, col)
+
+# Function to print the puzzle state in a readable way
+def print_puzzle(state):
+    for row in state:
+        print(" ".join(str(x) if x != 0 else ' ' for x in row))
+
+# Function to check if a given state is solvable
+def is_solvable(state):
+    flattened_state = [num for row in state for num in row if num != 0]
+    inversions = 0
+    for i in range(len(flattened_state)):
+        for j in range(i + 1, len(flattened_state)):
+            if flattened_state[i] > flattened_state[j]:
+                inversions += 1
+    blank_row = next(i for i, row in enumerate(state) if 0 in row)
+    if (inversions % 2 == 0 and blank_row % 2 == 0) or (inversions % 2 == 1 and blank_row % 2 == 1):
+        return True
+    return False
+
+# Function to get all possible moves from the current puzzle state
+def get_possible_moves(state):
+    moves = []
+    zero_row, zero_col = next((r, c) for r in range(3) for c in range(3) if state[r][c] == 0)
+    
+    for dr, dc in directions:
+        new_row, new_col = zero_row + dr, zero_col + dc
+        if 0 <= new_row < 3 and 0 <= new_col < 3:
+            new_state = [row[:] for row in state]  # Make a copy of the state
+            new_state[zero_row][zero_col], new_state[new_row][new_col] = new_state[new_row][new_col], new_state[zero_row][zero_col]
+            moves.append(new_state)
+    
+    return moves
+
+# BFS to solve the puzzle
+def bfs(initial_state):
+    if not is_solvable(initial_state):
+        print("The puzzle is unsolvable.")
+        return None
+    
+    # Queue holds tuples of (state, path)
+    queue = deque([(initial_state, [])])
+    visited = set()
+
+    while queue:
+        current_state, path = queue.popleft()
+        
+        # Check if the goal state is reached
+        if current_state == goal_state:
+            return path  # Return the steps that lead to the solution
+        
+        visited.add(tuple(tuple(row) for row in current_state))
+        
+        for next_state in get_possible_moves(current_state):
+            state_tuple = tuple(tuple(row) for row in next_state)
+            if state_tuple not in visited:
+                queue.append((next_state, path + [next_state]))
+    
+    return None
+
+# Generate a random puzzle state
+def generate_random_state():
+    numbers = list(range(1, 9)) + [0]
+    random.shuffle(numbers)
+    state = [numbers[0:3], numbers[3:6], numbers[6:]]
+    return state
+
+def main():
+    # Read initial state from command line arguments or generate random state
+    if len(sys.argv) > 1:
+        initial_state = [list(map(int, sys.argv[i:i+3])) for i in range(1, len(sys.argv), 3)]
+    else:
+        initial_state = generate_random_state()
+
+    print("Initial state of the puzzle:")
+    print_puzzle(initial_state)
+
+    print("Solving the puzzle...")
+    path = bfs(initial_state)
+    
+    if path:
+        print(f"Solution found in {len(path)} moves.")
+        for i, step in enumerate(path, start=1):
+            print(f"Step {i}:")
+            print_puzzle(step)
+            print()
+    else:
+        print("No solution found.")
+
+if __name__ == "__main__":
+    main()
