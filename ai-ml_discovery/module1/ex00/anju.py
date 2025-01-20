@@ -250,3 +250,52 @@ def main():
 if __name__ == "__main__":
     main()
 
+#Exercise 00
+• Launch the program multiple times and verify the expected features:
+◦ It must generate a random 3x3 initial puzzle.
+◦ It must solve the puzzle or indicate that the puzzle is unsolvable.
+◦ It must show the diﬀerent steps, and you have to verify these steps.
+• Then try to launch the program with a speciﬁc initial state (from a ﬁle or command line).
+If this is not possible, the evaluation stops and the ﬁnal mark is 0.
+• Then make the same veriﬁcations as above, in the following cases:
+◦ The initial state of the puzzle is an already solved puzzle. In this case, no moves should be needed.
+◦ The initial state is an unsolvable puzzle.
+◦ Try a random initial state of your choice.
+ Yes
+ No
+Exercise 01
+Exercise 01
+• Launch the program multiple times and verify the expected features:
+◦ It must generate a random 3x3 initial puzzle.
+◦ It must solve the puzzle or indicate that the puzzle is unsolvable.
+◦ It must display all the diﬀerent solutions found for the puzzle. There should usually be multiple paths.
+◦ It must choose the shortest path and show the steps required. You must verify these steps.
+• Then try launching the program with a speciﬁc initial state (from a ﬁle or command line).
+Perform the same checks as above, in the following cases:
+◦ The initial state of the puzzle is an already solved puzzle. In this case, no moves should be needed.
+◦ The initial state is an unsolvable puzzle.
+◦ Try a random initial state of your choice.Exercise 00
+• Launch the program multiple times and verify the expected features:
+◦ It must generate a random 3x3 initial puzzle.
+◦ It must solve the puzzle or indicate that the puzzle is unsolvable.
+◦ It must show the diﬀerent steps, and you have to verify these steps.
+• Then try to launch the program with a speciﬁc initial state (from a ﬁle or command line).
+If this is not possible, the evaluation stops and the ﬁnal mark is 0.
+• Then make the same veriﬁcations as above, in the following cases:
+◦ The initial state of the puzzle is an already solved puzzle. In this case, no moves should be needed.
+◦ The initial state is an unsolvable puzzle.
+◦ Try a random initial state of your choice.
+ Yes
+ No
+Exercise 01
+Exercise 01
+• Launch the program multiple times and verify the expected features:
+◦ It must generate a random 3x3 initial puzzle.
+◦ It must solve the puzzle or indicate that the puzzle is unsolvable.
+◦ It must display all the diﬀerent solutions found for the puzzle. There should usually be multiple paths.
+◦ It must choose the shortest path and show the steps required. You must verify these steps.
+• Then try launching the program with a speciﬁc initial state (from a ﬁle or command line).
+Perform the same checks as above, in the following cases:
+◦ The initial state of the puzzle is an already solved puzzle. In this case, no moves should be needed.
+◦ The initial state is an unsolvable puzzle.
+◦ Try a random initial state of your choice.
