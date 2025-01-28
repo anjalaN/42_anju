@@ -8,12 +8,12 @@ goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
 # Possible moves (up, down, left, right)
 moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
+#Check if the current state matches the goal state.
 def is_goal(state):
-    """Check if the current state matches the goal state."""
     return state == goal_state
 
+# Return all possible states that can be reached by moving the empty space (0).
 def get_possible_moves(puzzle):
-    """Return all possible states that can be reached by moving the empty space (0)."""
     index_of_zero = puzzle.index(0)
     row, col = divmod(index_of_zero, 3)
     possible_moves = []
@@ -28,8 +28,8 @@ def get_possible_moves(puzzle):
 
     return possible_moves
 
+#Check if the puzzle is solvable based on the number of inversions.
 def is_solvable(puzzle):
-    """Check if the puzzle is solvable based on the number of inversions."""
     inversions = 0
     puzzle = [x for x in puzzle if x != 0]  # Remove the empty space (0)
     
@@ -41,8 +41,8 @@ def is_solvable(puzzle):
 
     return inversions % 2 == 0
 
+#Perform breadth-first search to find the shortest solution to the puzzle.
 def bfs(start_state):
-    """Perform breadth-first search to find the shortest solution to the puzzle."""
     if is_goal(start_state):
         print("The puzzle is already solved")
         return [start_state]
@@ -66,7 +66,6 @@ def bfs(start_state):
     return None  # If no solution is found
 
 def print_puzzle(puzzle):
-    """Print the current state of the puzzle."""
     for i in range(0, len(puzzle), 3):
         print(puzzle[i:i+3])
     print()
@@ -84,16 +83,20 @@ def main():
     initial_state = None
 
     # Accept the initial state from command line argument or generate a random one
-    #print(sys.argv[0])
     if len(sys.argv) == 10:  # 9 puzzle numbers
-        initial_state = [int(arg) for arg in sys.argv[1:]]
-        if 0 not in initial_state: #check if 0 is missing
-            print("Error: Puzzle must include 0 (empty space).")
+        try:
+            # Try converting all arguments to integers
+            initial_state = [int(arg) for arg in sys.argv[1:]]
+            if 0 not in initial_state:  # Check if 0 is missing
+                print("Error: Puzzle must include 0 (empty space).")
+                return
+        except ValueError:
+            print("Error: All inputs must be integers. Please provide a valid puzzle configuration.")
             return
         
     elif len(sys.argv) == 2:  # File option
         filename = sys.argv[1]
-        initial_state = load_from_file(filename)
+       #initial_state = load_from_file(filename)
     else:  # Random puzzle generation
         initial_state = [1, 2, 3, 4, 0, 5, 6, 7, 8]
         random.shuffle(initial_state)
@@ -121,9 +124,18 @@ def main():
         for i, step in enumerate(solution):
             print(f"Step {i + 1}:")
             print_puzzle(step)
-
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+
 
 
 #for testet generator random puzzle
