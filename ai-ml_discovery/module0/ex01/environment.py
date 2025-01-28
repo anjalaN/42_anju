@@ -31,9 +31,30 @@ def simulate_temperature(season):
             break
         time.sleep(1)
 
+
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python environment.py <season>")
-    else:
-        season = sys.argv[1].lower()
-        simulate_temperature(season)
+    try:
+        if len(sys.argv) != 2:
+            print("Usage: python environment.py <season>")
+        else:
+            season = sys.argv[1].lower()
+            if season not in SEASON_TEMP_RANGES:
+                print(f"Error: '{season}' is not a valid season name. Valid options are: {', '.join(SEASON_TEMP_RANGES.keys())}")
+            else:
+                simulate_temperature(season)
+    except Exception as e:
+        print(f"Error: {e}")
+
+# if __name__ == "__main__":
+#     try:
+#         if len(sys.argv) != 2:
+#             print("Usage: python environment.py <season>")
+#         elif sys.argv[1].lower() not in SEASON_TEMP_RANGES
+#             raise "season is not correct"
+#         else:
+#             season = sys.argv[1].lower()
+#             simulate_temperature(season)
+#     except Exception as e:
+#         print(f"e")
+
+#for testibg python environment.py spring 
