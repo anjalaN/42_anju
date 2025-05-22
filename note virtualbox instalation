@@ -1,1 +1,19 @@
 
+
+
+### **ETL (Extract, Transform, Load)**
+ETL is a process used in data engineering and analytics to prepare data for analysis and reporting. It consists of three main steps:
+1. **Extract** – Pulling raw data from various sources like databases, APIs, or flat files.
+2. **Transform** – Cleaning, structuring, and enriching the extracted data to make it useful.
+3. **Load** – Storing the transformed data into a target system such as a data warehouse or a data lake.
+
+ETL is essential for businesses that deal with large amounts of data and need efficient ways to process and analyze it.
+
+### **Data Science**
+Data science is a broad field that focuses on extracting insights and knowledge from data using various techniques. It combines:
+- **Statistics & Mathematics** – Helps in modeling and interpreting data.
+- **Machine Learning** – Algorithms that allow computers to learn patterns and make predictions.
+- **Data Engineering** – Managing, cleaning, and organizing large datasets.
+- **Visualization** – Creating graphs and charts to make complex data understandable.
+- **Business & Domain Knowledge** – Applying data-driven solutions to real-world problems.
+
